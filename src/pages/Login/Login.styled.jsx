@@ -8,11 +8,18 @@ export const Form = styled.form`
   margin: 50px 0;
 `;
 
+export const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+
+  font-size: 18px;
+`;
+
 export const Input = styled.input`
   width: 250px;
   height: 30px;
   padding: 0 10px;
-  margin-left: 10px;
+  margin-top: 5px;
 
   font-size: 18px;
   border: 1px solid #951f99;

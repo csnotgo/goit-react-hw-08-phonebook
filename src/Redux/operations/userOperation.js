@@ -6,6 +6,8 @@ import {
   refreshUser,
   registerUser,
 } from 'services/usersApi';
+import Notiflix from 'notiflix';
+Notiflix.Notify.init({ position: 'center-top' });
 
 const token = {
   set(token) {
@@ -23,8 +25,16 @@ export const registerUserThunk = createAsyncThunk(
     try {
       const response = await registerUser(user);
       token.set(response.data.token);
+      Notiflix.Notify.success(
+        `Successful registration, welcome ${response.data.user.name}`
+      );
       return response.data;
     } catch (error) {
+      if (error.response.status === 400) {
+        Notiflix.Notify.failure(
+          'Your password must contain letters and numbers, and longer than 6 symbols'
+        );
+      }
       return rejectWithValue(error);
     }
   }
@@ -36,8 +46,14 @@ export const loginUserThunk = createAsyncThunk(
     try {
       const response = await loginUser(user);
       token.set(response.data.token);
+      Notiflix.Notify.info(`Welcome ${response.data.user.name}`);
       return response.data;
     } catch (error) {
+      if (error.response.status === 400) {
+        Notiflix.Notify.failure(
+          'Incorrect email or password, please try again'
+        );
+      }
       return rejectWithValue(error);
     }
   }
@@ -48,6 +64,7 @@ export const logoutUserThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await logoutUser();
+      Notiflix.Notify.info(`Bye, you logout`);
       token.unset();
     } catch (error) {
       return rejectWithValue(error);
