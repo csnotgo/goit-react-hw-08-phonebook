@@ -27,6 +27,12 @@ export const App = () => {
           }
         />
         <Route
+          path="/login"
+          element={
+            <RestrictedRoute redirectTo="/contacts" component={<Login />} />
+          }
+        />
+        <Route
           path="/register"
           element={
             <RestrictedRoute redirectTo="/contacts" component={<Register />} />
@@ -34,7 +40,9 @@ export const App = () => {
         />
         <Route
           path="/contacts"
-          element={<PrivateRoute redirectTo="/" component={<Contacts />} />}
+          element={
+            <PrivateRoute redirectTo="/login" component={<Contacts />} />
+          }
         />
       </Route>
       <Route path="*" element={<h1>Page not found</h1>} />
