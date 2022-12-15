@@ -6,6 +6,7 @@ import Layout from 'pages/Layout/Layout';
 import PrivateRoute from 'components/PrivateRoute';
 import RestrictedRoute from 'components/RestrictedRoute';
 
+const Home = lazy(() => import('pages/Home/Home'));
 const Login = lazy(() => import('pages/Login/Login'));
 const Register = lazy(() => import('pages/Register/Register'));
 const Contacts = lazy(() => import('pages/Contacts/Contacts'));
@@ -20,12 +21,7 @@ export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route
-          index
-          element={
-            <RestrictedRoute redirectTo="/contacts" component={<Login />} />
-          }
-        />
+        <Route index element={<Home />} />
         <Route
           path="/login"
           element={
